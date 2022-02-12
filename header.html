@@ -8,180 +8,293 @@
   <link rel="stylesheet" type="text/css" href="mw.ui.css">
 </head>
 
-<body>
-Quartz glyph job vext cwm finks.
-
-
 <body class="client-js">
-<h1>Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos</h1>
-<p>qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui <a href="https://reactjs.org/docs/introducing-jsx.html">dolorem ipsum</a>, quia dolor sit amet consectetur adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat <a href="https://www.levels.fyi/">voluptatem</a>.</p>
+<h1>Startist</h1>
+<p>This tool will analyze contributions, and return a report of all new sections started by a user. Searches can be customized to specific discussion boards, as well as specific namespaces.</p>
+<p></p>
 
 <div id="startistform">
 <form action="process.py" method="get">
-<button type="submit" class="mw-ui-button mw-ui-progressive mw-ui-big">Submit</button><br />
-<table>
-  <tr>
-    <td><label>Username:</label></td>
-    <td><input type="text" class="mw-ui-input" name="text1" required /></td>
-  </tr>
-  <tr>
-    <td><label>SSN:<span class="small">(optional)</span></label></td>
-    <td><input type="text" class="mw-ui-input" name="text2" maxlength="11"/></td>
-  </tr>
-</table>
-<p>
-  <div class="mw-ui-checkbox">
-    <input type="checkbox" id="box1" name="box1" value="true" />
-    <label for="box1">Accept the futility of all human endeavors</label>
-  </div>
-</p>
-<table>
+	<button type="submit" class="mw-ui-button mw-ui-progressive mw-ui-big">Submit</button><br />
+	<table>
+  		<tr>
+    		<td><label>Username:</label></td>
+    		<td><input type="text" class="mw-ui-input" name="text1" required /></td>
+  		</tr>
+  		<tr>
+    		<td><label>Start date:<span class="small">(optional, YYYY-MM-DD)</span></label></td>
+    		<td><input type="text" class="mw-ui-input" name="text2" maxlength="11"/></td>
+  		</tr>
+  		<tr>
+    		<td><label>End date:<span class="small">(optional, YYYY-MM-DD)</span></label></td>
+    		<td><input type="text" class="mw-ui-input" name="text2" maxlength="11"/></td>
+  		</tr>
+	</table>
+	<p>
+  	<div class="mw-ui-checkbox">
+    	<input type="checkbox" id="box1" name="box1" value="true" />
+    	<label for="box1">Accept the futility of all human endeavors</label><!--
+  -->&nbsp;	</div>
+	</p>
+	<table>
+		<tr>
+			<td width=33%>
+				<input type="checkbox" id="boxns01ttop" name="boxns01ttop" class="boxnst" value="true" />
+				<label for="boxns01ttop">All talk pages</label><!--
+	-->&nbsp;		</td>
+			<td width=33%>
+				<input type="checkbox" id="boxns03top" name="boxns03top" class="boxns" value="true" />
+    			<label for="boxns03top">All project pages</label><!--
+	-->&nbsp;		</td>
+			<td width=33%>
+				<input type="checkbox" id="boxnbsatop" name="boxnbsatop" class="boxnbsatop" value="true" />
+				<label for="boxnbsatop">All noticeboards</label><!--
+	-->&nbsp;		</td>
+		</tr>
+		<tr>
+			<td width=33%>
+				<input type="checkbox" id="boxrdsatop" name="boxrdsatop" class="boxrdsatop" value="true" />
+				<label for="boxrdsatop">All reference desks</label><!--
+	-->&nbsp;		</td>
+			<td width=33%>
+				<input type="checkbox" id="boxvpsatop" name="boxvpsatop" class="boxvpsatop" value="true" />
+				<label for="boxvpsatop">All village pumps</label><!--
+	-->&nbsp;		</td>
+			<td width=33%>
+				<input type="checkbox" id="boxthsatop" name="boxthsatop" class="boxthsatop" value="true" />
+				<label for="boxthsatop">Teahouse / help desk</label><!--
+	-->&nbsp;		</td>
+		</tr>
+	</table>
+	<br/>
+	<fieldset>
+		<legend><center><button type="button" class="collapser collapser-change mw-ui-button mw-ui-progressive" id="collapser1">Show all settings</button></center></legend>
+	<div class="collapsecontent" id="collapsecontent1">
+	<table>
 	<tr>
-		<td>
-			<button type="button" class="collapser mw-ui-button mw-ui-progressive" id="collapser1">Expand namespaces</button>
+		<td style="text-align:right;">
+			<fieldset>
+				<legend><b>Namespaces</b></legend>
+    			<label for="boxns01">Main</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns01" name="boxns01" class="boxns" value="true" />
+    			<label for="boxns01t">(talk)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns01t" name="boxns01t" class="boxnst" value="true" /><br />
+    			<label for="boxns02">User</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns02" name="boxns02" class="boxns" value="true" />
+				<label for="boxns02t">(talk)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns02t" name="boxns02t" class="boxnst" value="true" /><br />
+    			<label for="boxns03">Wikipedia</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns03" name="boxns03" class="boxns" value="true" />
+				<label for="boxns03t">(talk)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns03t" name="boxns03t" class="boxnst" value="true" /><br />
+    			<label for="boxns04">File</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns04" name="boxns04" class="boxns" value="true" />
+				<label for="boxns04t">(talk)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns04t" name="boxns04t" class="boxnst" value="true" /><br />
+    			<label for="boxns05">MediaWiki</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns05" name="boxns05" class="boxns" value="true" />
+				<label for="boxns05t">(talk)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns05t" name="boxns05t" class="boxnst" value="true" /><br />
+    			<label for="boxns06">Template</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns06" name="boxns06" class="boxns" value="true" />
+				<label for="boxns06t">(talk)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns06t" name="boxns06t" class="boxnst" value="true" /><br />
+    			<label for="boxns07">Help</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns07" name="boxns07" class="boxns" value="true" />
+				<label for="boxns07t">(talk)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns07t" name="boxns07t" class="boxnst" value="true" /><br />
+    			<label for="boxns08">Category</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns08" name="boxns08" class="boxns" value="true" />
+				<label for="boxns08t">(talk)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns08t" name="boxns08t" class="boxnst" value="true" /><br />
+    			<label for="boxns09">Portal</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns09" name="boxns09" class="boxns" value="true" />
+				<label for="boxns09t">(talk)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns09t" name="boxns09t" class="boxnst" value="true" /><br />
+    			<label for="boxns10">Draft</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns10" name="boxns10" class="boxns" value="true" />
+				<label for="boxns10t">(talk)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns10t" name="boxns10t" class="boxnst" value="true" /><br />
+    			<label for="boxns11">TimedText</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns11" name="boxns11" class="boxns" value="true" />
+				<label for="boxns11t">(talk)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns11t" name="boxns11t" class="boxnst" value="true" /><br />
+    			<label for="boxns12">Module</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns12" name="boxns12" class="boxns" value="true" />
+				<label for="boxns12t">(talk)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns12t" name="boxns12t" class="boxnst" value="true" /><br />
+    			<label for="boxns13">Gadget</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns13" name="boxns13" class="boxns" value="true" />
+				<label for="boxns13t">(talk)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns13t" name="boxns13t" class="boxnst" value="true" /><br />
+    			<label for="boxns14">Gadget def.</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns14" name="boxns14" class="boxns" value="true" />
+				<label for="boxns14t">(talk)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxns14t" name="boxns14t" class="boxnst" value="true" /><br />
+				<br />
+    			<label for="boxnssa"><b>Select all</b></label><!--
+				-->&nbsp;<input type="checkbox" id="boxnssa" name="boxnssa" class="boxnssa" value="true" />
+				<label for="boxnssat">(talk)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxnssat" name="boxnssat" class="boxnssat" value="true" /><br />
+    			<label for="boxnsca"><b>Clear all</b></label><!--
+				-->&nbsp;<input type="checkbox" id="boxnsca" name="boxnsca" class="boxnsca" value="true" />
+				<label for="boxnscat">(talk)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxnscat" name="boxnscat" class="boxnscat" value="true" /><br />
+    			<label for="boxnsia"><b>Invert all</b></label><!--
+				-->&nbsp;<input type="checkbox" id="boxnsia" name="boxnsia" class="boxnsia" value="true" />
+				<label for="boxnsiat">(talk)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxnsiat" name="boxnsiat" class="boxnsiat" value="true" /><br />
+			</fieldset>
 		</td>
-		<td>
-			<button type="button" class="collapser mw-ui-button mw-ui-progressive" id="collapser2">Expand noticeboards</button>
+		<td style="text-align:right;">
+			<fieldset>
+				<legend><b>Noticeboards</b></legend>
+				<label for="boxnb01">Administrators'</label><!--
+				-->&nbsp;<input type="checkbox" id="boxnb01" name="boxnb01" class="boxnb" value="true" /><br />
+				<label for="boxnb02">Administrators' (edit warring)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxnb02" name="boxnb02" class="boxnb" value="true" /><br />
+				<label for="boxnb03">Administrators' (incidents)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxnb03" name="boxnb03" class="boxnb" value="true" /><br />
+				<label for="boxnb04">Arbitration/Requests/Enforcement</label><!--
+				-->&nbsp;<input type="checkbox" id="boxnb04" name="boxnb04" class="boxnb" value="true" /><br />
+				<label for="boxnb05">Biographies of living persons</label><!--
+				-->&nbsp;<input type="checkbox" id="boxnb05" name="boxnb05" class="boxnb" value="true" /><br />
+				<label for="boxnb06">Conflict of interest</label><!--
+				-->&nbsp;<input type="checkbox" id="boxnb06" name="boxnb06" class="boxnb" value="true" /><br />
+				<label for="boxnb07">Dispute resolution</label><!--
+				-->&nbsp;<input type="checkbox" id="boxnb07" name="boxnb07" class="boxnb" value="true" /><br />
+				<label for="boxnb08">External links</label><!--
+				-->&nbsp;<input type="checkbox" id="boxnb08" name="boxnb08" class="boxnb" value="true" /><br />
+				<label for="boxnb09">Fringe theories</label><!--
+				-->&nbsp;<input type="checkbox" id="boxnb09" name="boxnb09" class="boxnb" value="true" /><br />
+				<label for="boxnb10">No original research</label><!--
+				-->&nbsp;<input type="checkbox" id="boxnb10" name="boxnb10" class="boxnb" value="true" /><br />
+				<label for="boxnb11">Neutral point of view</label><!--
+				-->&nbsp;<input type="checkbox" id="boxnb11" name="boxnb11" class="boxnb" value="true" /><br />
+				<label for="boxnb12">Reliable sources</label><!--
+				-->&nbsp;<input type="checkbox" id="boxnb12" name="boxnb12" class="boxnb" value="true" /><br />
+				<label for="boxnb13">Bureaucrats' noticeboard</label><!--
+				-->&nbsp;<input type="checkbox" id="boxnb13" name="boxnb13" class="boxnb" value="true" /><br />
+				<label for="boxnb14">Bots</label><!--
+				-->&nbsp;<input type="checkbox" id="boxnb14" name="boxnb14" class="boxnb" value="true" /><br />
+				<br />
+				<label for="boxnbsa"><b>Select all</b></label><!--
+				-->&nbsp;<input type="checkbox" id="boxnbsa" name="boxnbsa" class="boxnbsa" value="true" /><br />
+				<label for="boxnbca"><b>Clear all</b></label><!--
+				-->&nbsp;<input type="checkbox" id="boxnbca" name="boxnbca" class="boxnbca" value="true" /><br />
+				<label for="boxnbia"><b>Invert all</b></label><!--
+				-->&nbsp;<input type="checkbox" id="boxnbia" name="boxnbia" class="boxnbia" value="true" />
+			</fieldset>
 		</td>
 	</tr>
 	<tr>
 		<td style="text-align:right;">
-			<div class="collapsecontent" id="collapsecontent1">
-				<center><b>Namespaces</b></center><br/>
-    			<label for="boxns01">Main</label>
-				<input type="checkbox" id="boxns01" name="boxns01" class="boxns" value="true" />
-    			<label for="boxns01t">(talk)</label>
-				<input type="checkbox" id="boxns01t" name="boxns01t" class="boxnst" value="true" /><br />
-    			<label for="boxns02">User</label>
-				<input type="checkbox" id="boxns02" name="boxns02" class="boxns" value="true" />
-				<label for="boxns02t">(talk)</label>
-				<input type="checkbox" id="boxns02t" name="boxns02t" class="boxnst" value="true" /><br />
-    			<label for="boxns03">Wikipedia</label>
-				<input type="checkbox" id="boxns03" name="boxns03" class="boxns" value="true" />
-				<label for="boxns03t">(talk)</label>
-				<input type="checkbox" id="boxns03t" name="boxns03t" class="boxnst" value="true" /><br />
-    			<label for="boxns04">File</label>
-				<input type="checkbox" id="boxns04" name="boxns04" class="boxns" value="true" />
-				<label for="boxns04t">(talk)</label>
-				<input type="checkbox" id="boxns04t" name="boxns04t" class="boxnst" value="true" /><br />
-    			<label for="boxns05">MediaWiki</label>
-				<input type="checkbox" id="boxns05" name="boxns05" class="boxns" value="true" />
-				<label for="boxns05t">(talk)</label>
-				<input type="checkbox" id="boxns05t" name="boxns05t" class="boxnst" value="true" /><br />
-    			<label for="boxns06">Template</label>
-				<input type="checkbox" id="boxns06" name="boxns06" class="boxns" value="true" />
-				<label for="boxns06t">(talk)</label>
-				<input type="checkbox" id="boxns06t" name="boxns06t" class="boxnst" value="true" /><br />
-    			<label for="boxns07">Help</label>
-				<input type="checkbox" id="boxns07" name="boxns07" class="boxns" value="true" />
-				<label for="boxns07t">(talk)</label>
-				<input type="checkbox" id="boxns07t" name="boxns07t" class="boxnst" value="true" /><br />
-    			<label for="boxns08">Category</label>
-				<input type="checkbox" id="boxns08" name="boxns08" class="boxns" value="true" />
-				<label for="boxns08t">(talk)</label>
-				<input type="checkbox" id="boxns08t" name="boxns08t" class="boxnst" value="true" /><br />
-    			<label for="boxns09">Portal</label>
-				<input type="checkbox" id="boxns09" name="boxns09" class="boxns" value="true" />
-				<label for="boxns09t">(talk)</label>
-				<input type="checkbox" id="boxns09t" name="boxns09t" class="boxnst" value="true" /><br />
-    			<label for="boxns10">Draft</label>
-				<input type="checkbox" id="boxns10" name="boxns10" class="boxns" value="true" />
-				<label for="boxns10t">(talk)</label>
-				<input type="checkbox" id="boxns10t" name="boxns10t" class="boxnst" value="true" /><br />
-    			<label for="boxns11">TimedText</label>
-				<input type="checkbox" id="boxns11" name="boxns11" class="boxns" value="true" />
-				<label for="boxns11t">(talk)</label>
-				<input type="checkbox" id="boxns11t" name="boxns11t" class="boxnst" value="true" /><br />
-    			<label for="boxns12">Module</label>
-				<input type="checkbox" id="boxns12" name="boxns12" class="boxns" value="true" />
-				<label for="boxns12t">(talk)</label>
-				<input type="checkbox" id="boxns12t" name="boxns12t" class="boxnst" value="true" /><br />
-    			<label for="boxns13">Gadget</label>
-				<input type="checkbox" id="boxns13" name="boxns13" class="boxns" value="true" />
-				<label for="boxns13t">(talk)</label>
-				<input type="checkbox" id="boxns13t" name="boxns13t" class="boxnst" value="true" /><br />
-    			<label for="boxns14">Gadget def.</label>
-				<input type="checkbox" id="boxns14" name="boxns14" class="boxns" value="true" />
-				<label for="boxns14t">(talk)</label>
-				<input type="checkbox" id="boxns14t" name="boxns14t" class="boxnst" value="true" /><br /><br />
-    			<label for="boxnssa"><b>Select all</b></label>
-				<input type="checkbox" id="boxnssa" name="boxnssa" class="boxnssa" value="true" />
-				<label for="boxnssat">(talk)</label>
-				<input type="checkbox" id="boxnssat" name="boxnssat" class="boxnssat" value="true" /><br />
-    			<label for="boxnsca"><b>Clear all</b></label>
-				<input type="checkbox" id="boxnsca" name="boxnsca" class="boxnsca" value="true" />
-				<label for="boxnscat">(talk)</label>
-				<input type="checkbox" id="boxnscat" name="boxnscat" class="boxnscat" value="true" /><br />
-    			<label for="boxnsia"><b>Invert all</b></label>
-				<input type="checkbox" id="boxnsia" name="boxnsia" class="boxnsia" value="true" />
-				<label for="boxnsiat">(talk)</label>
-				<input type="checkbox" id="boxnsiat" name="boxnsiat" class="boxnsiat" value="true" /><br />
-			</div>
+			<fieldset>
+				<legend><b>Reference desks</b></legend>
+				<label for="boxrd01">(main)</label><!--
+				-->&nbsp;<input type="checkbox" id="boxrd01" name="boxrd01" class="boxrd" value="true" /><br/>
+				<label for="boxrd02">Computing</label><!--
+				-->&nbsp;<input type="checkbox" id="boxrd02" name="boxrd02" class="boxrd" value="true" /><br/>
+				<label for="boxrd03">Entertainment</label><!--
+				-->&nbsp;<input type="checkbox" id="boxrd03" name="boxrd03" class="boxrd" value="true" /><br/>
+				<label for="boxrd04">Humanities</label><!--
+				-->&nbsp;<input type="checkbox" id="boxrd04" name="boxrd04" class="boxrd" value="true" /><br/>
+				<label for="boxrd05">Language</label><!--
+				-->&nbsp;<input type="checkbox" id="boxrd05" name="boxrd05" class="boxrd" value="true" /><br/>
+				<label for="boxrd06">Mathematics</label><!--
+				-->&nbsp;<input type="checkbox" id="boxrd06" name="boxrd06" class="boxrd" value="true" /><br/>
+				<label for="boxrd07">Science</label><!--
+				-->&nbsp;<input type="checkbox" id="boxrd07" name="boxrd07" class="boxrd" value="true" /><br/>
+				<label for="boxrd08">Miscellaneous</label><!--
+				-->&nbsp;<input type="checkbox" id="boxrd08" name="boxrd08" class="boxrd" value="true" /><br/>
+				<br />
+				<label for="boxrdsa"><b>Select all</b></label><!--
+				-->&nbsp;<input type="checkbox" id="boxrdsa" name="boxrdsa" class="boxrdsa" value="true" /><br />
+				<label for="boxrdca"><b>Clear all</b></label><!--
+				-->&nbsp;<input type="checkbox" id="boxrdca" name="boxrdca" class="boxrdca" value="true" /><br />
+				<label for="boxrdia"><b>Invert all</b></label><!--
+				-->&nbsp;<input type="checkbox" id="boxrdia" name="boxrdia" class="boxrdia" value="true" />
+			</fieldset>
 		</td>
 		<td style="text-align:right;">
-			<div class="collapsecontent" id="collapsecontent2">
-			<center><b>Noticeboards</b></center><br/>
-			<label for="boxnb01">Administrators'</label>
-			<input type="checkbox" id="boxnb01" name="boxnb01" class="boxnb" value="true" /><br />
-			<label for="boxnb02">Administrators' (edit warring)</label>
-			<input type="checkbox" id="boxnb02" name="boxnb02" class="boxnb" value="true" /><br />
-			<label for="boxnb03">Administrators' (incidents)</label>
-			<input type="checkbox" id="boxnb03" name="boxnb03" class="boxnb" value="true" /><br />
-			<label for="boxnb04">Arbitration/Requests/Enforcement</label>
-			<input type="checkbox" id="boxnb04" name="boxnb04" class="boxnb" value="true" /><br />
-			<label for="boxnb05">Biographies of living persons</label>
-			<input type="checkbox" id="boxnb05" name="boxnb05" class="boxnb" value="true" /><br />
-			<label for="boxnb06">Conflict of interest</label>
-			<input type="checkbox" id="boxnb06" name="boxnb06" class="boxnb" value="true" /><br />
-			<label for="boxnb07">Dispute resolution</label>
-			<input type="checkbox" id="boxnb07" name="boxnb07" class="boxnb" value="true" /><br />
-			<label for="boxnb08">External links</label>
-			<input type="checkbox" id="boxnb08" name="boxnb08" class="boxnb" value="true" /><br />
-			<label for="boxnb09">Fringe theories</label>
-			<input type="checkbox" id="boxnb09" name="boxnb09" class="boxnb" value="true" /><br />
-			<label for="boxnb10">No original research</label>
-			<input type="checkbox" id="boxnb10" name="boxnb10" class="boxnb" value="true" /><br />
-			<label for="boxnb11">Neutral point of view</label>
-			<input type="checkbox" id="boxnb11" name="boxnb11" class="boxnb" value="true" /><br />
-			<label for="boxnb12">Reliable sources</label>
-			<input type="checkbox" id="boxnb12" name="boxnb12" class="boxnb" value="true" /><br />
-			<label for="boxnb13">Bureaucrats' noticeboard</label>
-			<input type="checkbox" id="boxnb13" name="boxnb13" class="boxnb" value="true" /><br />
-			<label for="boxnb14">Arbitration Committee</label>
-			<input type="checkbox" id="boxnb14" name="boxnb14" class="boxnb" value="true" /><br /><br />
-			<label for="boxnbsa"><b>Select all</b></label>
-			<input type="checkbox" id="boxnbsa" name="boxnbsa" class="boxnbsa" value="true" /><br />
-			<label for="boxnbca"><b>Clear all</b></label>
-			<input type="checkbox" id="boxnbca" name="boxnbca" class="boxnbca" value="true" /><br />
-			<label for="boxnbia"><b>Invert all</b></label>
-			<input type="checkbox" id="boxnbia" name="boxnbia" class="boxnbia" value="true" />
-			</div>
+			<fieldset>
+				<legend><b>Village pumps and misc. help</b></legend>
+				<label for="boxth">Teahouse</label><!--
+				-->&nbsp;<input type="checkbox" id="boxth" name="boxth" class="boxth" value="true"/><br/>
+				<label for="boxth">Help desk</label><!--
+				-->&nbsp;<input type="checkbox" id="boxhd" name="boxhd" class="boxth" value="true"/><br/>
+				<label for="boxvp01">Village Pump: Policy</label><!--
+				-->&nbsp;<input type="checkbox" id="boxvp01" name="boxvp01" class="boxvp" value="true" /><br/>
+				<label for="boxvp02">Village Pump: Technical</label><!--
+				-->&nbsp;<input type="checkbox" id="boxvp02" name="boxvp02" class="boxvp" value="true" /><br/>
+				<label for="boxvp03">Village Pump: Proposals</label><!--
+				-->&nbsp;<input type="checkbox" id="boxvp03" name="boxvp03" class="boxvp" value="true" /><br/>
+				<label for="boxvp04">Village Pump: Idea lab</label><!--
+				-->&nbsp;<input type="checkbox" id="boxvp04" name="boxvp04" class="boxvp" value="true" /><br/>
+				<label for="boxvp05">Village Pump: WMF</label><!--
+				-->&nbsp;<input type="checkbox" id="boxvp05" name="boxvp05" class="boxvp" value="true" /><br/>
+				<label for="boxvp06">Village Pump: Miscellaneous</label><!--
+				-->&nbsp;<input type="checkbox" id="boxvp06" name="boxvp06" class="boxvp" value="true" /><br/>
+				<br />
+				<label for="boxvpsa"><b>Select all</b></label><!--
+				-->&nbsp;<input type="checkbox" id="boxvpsa" name="boxvpsa" class="boxvpsa" value="true" /><br />
+				<label for="boxvpca"><b>Clear all</b></label><!--
+				-->&nbsp;<input type="checkbox" id="boxvpca" name="boxvpca" class="boxvpca" value="true" /><br />
+				<label for="boxvpia"><b>Invert all</b></label><!--
+				-->&nbsp;<input type="checkbox" id="boxvpia" name="boxvpia" class="boxvpia" value="true" />
+			</fieldset>
 		</td>
 	</tr>
-</table>
+	</table>
+	</div>
+	</fieldset>
 </form>
+<br/>
+<br/>
+<center><button type="button" class="mw-ui-button mw-ui-progressive" id="clearall">Clear all selections</button></center>
 </div>
 
-<h2>Now he no longer has much time to live.</h2>
-<p>Before his death he gathers in his head all his experiences of the entire time up into one question which he has not yet put to the gatekeeper. He waves to him, since he can no longer lift up his stiffening body.</p>
-<p>"What do you want to know now?" asks the doorkeeper; "you are insatiable."</p>
-<p>"Everyone strives to reach the Law," says the man, "so how does it happen that for all these many years no one but myself has ever begged for admittance?"</p>
-<p>The doorkeeper recognizes that the man has reached his end, and to let his failing senses catch the words, roars in his ear: "No one else could ever be admitted here, since this gate was made only for you. I am now going to shut it."</p>
+<img src="startist-logo.png"/ style="float:right;">
 
+<h2>More information about this tool</h2>
+<p>This will go through a user's contributions, pick out edits with "New section" in the summary, and filter them based on the search criteria above.</p>
+<p>This will not return <em>all</em> new sections created by the user. "New section" is added to edit summaries automatically, but not all edits that introduce a new section heading are guaranteed to be tagged s.</p>
+<p>For noticeboard, reference desk, village pump and help desk searches, adding more of these will not make the tool take longer (they're all in the Wikipedia namespace, so all of a user's contributions in that namespace are being searched if any of these are specified).</p>
+<p><b>A word of caution when doing namespace searches:</b> These will make the tool take much longer to run, especially if the user has many edits in the namespaces being searched. It is best to keep these to a minimum, unless you're searching for something specific.</p>
 
+<span style="display:none;"><input type="checkbox" id="boxthia" name="boxthia" class="boxthia" value="true" /><input type="checkbox" id="boxthca" name="boxthca" class="boxthca" value="true" /></span>
 <footer>Made by <a href="https://github.com/jp-x-g/">JPxGn</a> • CSS and some HTML adapted from <a href="https://github.com/APerson241/afdstats" title="afdstats on GitHub">Enterprisey's AfDstats</a></footer>
 <script>
 ////////////////////////////////////////////////////////////////////////////////
 // Here be Javascripts.
 ////////////////////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////
+// Listener to clear all boxes when the "clear all" button is pressed
+////////////////////////////////////////
 
+document.getElementById("clearall").addEventListener("click", function() {
+	var inputs = document.getElementsByTagName("input");
+	for(var i = 0; i < inputs.length; i++) {
+		if(inputs[i].type == "checkbox") {
+			inputs[i].checked = false;
+		} // If it's a checkbox.
+	} // For all inputs.
+	SyncListener("boxns", "boxnsca", "boxnssa");
+	SyncListener("boxnst", "boxnscat", "boxnssat");
+	SyncListener("boxnb", "boxnbca", "boxnbsa", "boxnbsatop");
+	SyncListener("boxrd", "boxrdca", "boxrdsa", "boxrdsatop");
+	SyncListener("boxvp", "boxvpca", "boxvpsa", "boxvpsatop");
+	SyncListener("boxth", "boxthca", "boxthsatop");
+}) // end of event listener
 
 ////////////////////////////////////////
 // Script for "select all", "clear all", "invert" boxes
 ////////////////////////////////////////
 
-function setAll(button, classname, setTo) {
+function setAll(button, classname, setTo, flag) {
+	//if (flag == "onTrue") { if (document.getElementById(button).checked == false) {return;}}
+	//if (flag == "onFalse") { if (document.getElementById(button).checked == false) {return;}}
 	document.getElementById(button).addEventListener("click", function() {
 		//if (this.checked == true) {	var boolCheck = true } else { var boolCheck = false }
 		var boxes = document.getElementsByClassName(classname); // Get all noticeboard boxes.
@@ -192,21 +305,151 @@ function setAll(button, classname, setTo) {
 				else { boxes[i].checked = false; }
 			} // If it's "toggle"
 		} // For each checkbox
-		document.getElementById(button).checked = false;
+		if (flag == "reset") {
+			document.getElementById(button).checked = false;
+		}
 	}); // End of event listener
-}
+} // end of function 
 
-setAll("boxnssa", "boxns", true);
-setAll("boxnsca", "boxns", false);
-setAll("boxnsia", "boxns", "invert");
+setAll("boxnssa", "boxns", true, "onTrue");
+setAll("boxnsca", "boxns", false, "onTrue");
+setAll("boxnsia", "boxns", "invert", "reset");
 
-setAll("boxnssat", "boxnst", true);
-setAll("boxnscat", "boxnst", false);
-setAll("boxnsiat", "boxnst", "invert");
+setAll("boxnssat", "boxnst", true, "onTrue");
+setAll("boxnscat", "boxnst", false, "onTrue");
+setAll("boxnsiat", "boxnst", "invert", "reset");
 
-setAll("boxnbsa", "boxnb", true);
-setAll("boxnbca", "boxnb", false);
-setAll("boxnbia", "boxnb", "invert");
+setAll("boxnbsa", "boxnb", true, "onTrue");
+setAll("boxnbca", "boxnb", false, "onTrue");
+setAll("boxnbia", "boxnb", "invert", "reset");
+
+setAll("boxrdsa", "boxrd", true, "onTrue");
+setAll("boxrdca", "boxrd", false, "onTrue");
+setAll("boxrdia", "boxrd", "invert", "reset");
+
+setAll("boxvpsa", "boxvp", true, "onTrue");
+setAll("boxvpca", "boxvp", false, "onTrue");
+setAll("boxvpia", "boxvp", "invert", "reset");
+
+setAll("boxnbsatop", "boxnb", true, "onTrue");
+setAll("boxrdsatop", "boxrd", true, "onTrue");
+setAll("boxvpsatop", "boxvp", true, "onTrue");
+setAll("boxthsatop", "boxth", true, "onTrue");
+
+////////////////////////////////////////
+// Script for synchronizing doppelganger boxes
+////////////////////////////////////////
+
+function syncUp(button, doppelganger) {
+	document.getElementById(button).addEventListener("click", function() {
+		var val = document.getElementById(button).checked;
+		document.getElementById(doppelganger).checked = val;
+	}) // end of event listener
+	document.getElementById(doppelganger).addEventListener("click", function() {
+		var val = document.getElementById(doppelganger).checked;
+		document.getElementById(button).checked = val;
+	}) // end of event listener
+} // end of function 
+
+syncUp("boxns01t", "boxns01ttop")
+syncUp("boxns03", "boxns03top")
+
+////////////////////////////////////////
+// Script to sync up "all" and "none" boxes. Expensive but necessary for completeness.
+////////////////////////////////////////
+
+function SyncListener(classname, none, all, all2) {
+	console.log("Woof")
+	var bice = document.getElementsByClassName(classname);
+	var allChecked = 1;
+	var allUnchecked = 1;
+	for (var j = 0; j < bice.length; j++) {
+		if (bice[j].checked == false) { allChecked = 0;}
+		if (bice[j].checked == true) { allUnchecked = 0;}
+	} // Scan each box.
+	document.getElementById(none).checked = false;
+	document.getElementById(all).checked = false;
+	if (!(all2 === undefined)) { 
+		document.getElementById(all2).checked = false;
+	} // If second all has been provided
+	if (allChecked == 1) {
+		document.getElementById(all).checked = true;
+		if (!(all2 === undefined)) { 
+			document.getElementById(all2).checked = true;
+		} // If second all has been provided
+	} // If all checked
+	if (allUnchecked == 1) {
+		document.getElementById(none).checked = true;
+	} // If all unchecked
+}; // addSyncListener
+
+function addGroupSyncListener(classname, none, all, all2) {
+	var boxes = document.getElementsByClassName(classname);
+	for (var i = 0; i < boxes.length; i++) {
+		boxes[i].addEventListener("click", function() {
+			SyncListener(classname, none, all, all2);
+		}); // Event listener for box
+	} // For each box.
+	document.getElementById(none).addEventListener("click", function() {
+		SyncListener(classname, none, all, all2);
+	}); // Event listener for none
+	document.getElementById(all).addEventListener("click", function() {
+		SyncListener(classname, none, all, all2);
+	}); // Event listener for all
+	if (!(all2 === undefined)) {
+		document.getElementById(all2).addEventListener("click", function() {
+			SyncListener(classname, none, all, all2);
+		}); // Event listener for all2
+	} // If there even is an all2
+} // addGroupSyncListener
+
+/*
+
+			// Append none, all, and all2 to the listeners because they change this state too.
+			bice.push(document.getElementById(none));
+			bice.push(document.getElementById(all));
+			if (!(all2 === undefined)) { 
+				bice.push(document.getElementById(all2));
+			} // If all2 is specified
+			*/
+addGroupSyncListener("boxns", "boxnsca", "boxnssa");
+document.getElementById("boxnsia").addEventListener("click", function() {
+		SyncListener("boxns", "boxnsca", "boxnssa");
+	})
+
+addGroupSyncListener("boxnst", "boxnscat", "boxnssat");
+document.getElementById("boxnsiat").addEventListener("click", function() {
+		SyncListener("boxnst", "boxnscat", "boxnssat");
+	})
+
+addGroupSyncListener("boxnb", "boxnbca", "boxnbsa", "boxnbsatop");
+document.getElementById("boxnbia").addEventListener("click", function() {
+		SyncListener("boxnb", "boxnbca", "boxnbsa", "boxnbsatop");
+	})
+
+addGroupSyncListener("boxrd", "boxrdca", "boxrdsa", "boxrdsatop");
+document.getElementById("boxrdia").addEventListener("click", function() {
+		SyncListener("boxrd", "boxrdca", "boxrdsa", "boxrdsatop");
+	})
+
+addGroupSyncListener("boxvp", "boxvpca", "boxvpsa", "boxvpsatop");
+document.getElementById("boxvpia").addEventListener("click", function() {
+		SyncListener("boxvp", "boxvpca", "boxvpsa", "boxvpsatop");
+	})
+
+addGroupSyncListener("boxth", "boxthca", "boxthsatop");
+document.getElementById("boxthia").addEventListener("click", function() {
+		SyncListener("boxth", "boxthca", "boxthsatop");
+	})
+
+// Run them when the page loads, too.
+SyncListener("boxns", "boxnsca", "boxnssa");
+SyncListener("boxnst", "boxnscat", "boxnssat");
+SyncListener("boxnb", "boxnbca", "boxnbsa", "boxnbsatop");
+SyncListener("boxrd", "boxrdca", "boxrdsa", "boxrdsatop");
+SyncListener("boxvp", "boxvpca", "boxvpsa", "boxvpsatop");
+SyncListener("boxth", "boxthca", "boxthsatop");
+
 ////////////////////////////////////////
 // Script to enable collapsing sections 
 ////////////////////////////////////////
@@ -229,7 +472,20 @@ for (i = 0; i < coll.length; i++) {
       content.style.maxHeight = content.scrollHeight + "px";
     } 
     
-  });
+  }); // End of listener
+} // End of collapsible-sections script.
+
+
+var coll = document.getElementsByClassName("collapser-change");
+
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+  	this.innerHTML = this.innerHTML.replace("Show", "Extremely implausible string")
+  	this.innerHTML = this.innerHTML.replace("Hide", "Show")
+  	this.innerHTML = this.innerHTML.replace("Extremely implausible string", "Hide")
+  }); // End of listener
 } // End of collapsible-sections script.
 </script>
 </body>

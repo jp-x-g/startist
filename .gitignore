@@ -1,0 +1,5 @@
+# JPxG, 2022 February 11
+app-old.py
+env/*
+__pycache__
+app/__pycache__
