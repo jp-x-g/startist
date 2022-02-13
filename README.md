@@ -13,12 +13,10 @@ Structure:
 │   ├── templates
 │   │   └── index.html
 │   └── views.py
-├── app-old.py
 ├── LICENSE
 ├── README.md
 ├── requirements.txt
 ├── run.py
-└── setup.sh
 ```
 
 Basic invocation of the program:
