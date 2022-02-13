@@ -4,3 +4,4 @@ env/*
 __pycache__
 app/__pycache__
 notes.txt
+test.py

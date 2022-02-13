@@ -96,6 +96,68 @@ def mapping(key="checkbox"):
 		return pageKeyDict
 
 
+def valiDate(d):
+	e = ""
+	d = d.strip()
+	print("")
+	print("String: " + d)
+	for char in d:
+		if char in "1234567890":
+			e = e + char
+	# Remove everything that isn't a digit.
+	# Check to see if it's a valid date FORMAT.
+
+	if (len(e) > 14):
+		return "INVALID: More than 14 digits in date. Could not parse."
+	if (len(e) < 8):
+		return "INVALID: More than 8 digits in date. Could not parse."
+	if (len(e) > 8) and (len(e) < 14):
+		return "INVALID: Timestamp did not use YYYY-MM-DD or YY-MM-DD HH:MM:SS. Could not parse date."
+
+	#print("Formatted string: " + e)
+
+	if (e == ""):
+		return ""
+
+	# Now we check to see if it's actually a valid date.
+	#print("First four: " + e[0:4])
+	year  =  int(e[0:4])
+	month =  int(e[4:6])
+	day   =  int(e[6:8])
+	# 20221231 235959
+	# 01234567 890123
+
+	if year > 2112:
+		return "INVALID: Year higher than 2099. Be less forward-thinking."
+	if year < 2000:
+		return "INVALID: Year lower than 2000. Be more forward-thinking."
+	if month > 12:
+		return "INVALID: Month higher than 12. Octember is a lie."
+	if month < 1:
+		return "INVALID: Month lower than 1. Zerouary is a lie."
+	lengths = [420, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+	if day > lengths[month]:
+		return "INVALID: Day higher than exists for that month. Try the knuckle-counting thing next time."
+	if day < 1:
+		return "INVALID: Day lower than 1. Dates aren't zero-indexed, buddy."
+
+	if len(e) == 8:
+		# If it's just YYYYMMDD, we're done.
+		return e + "000000"
+
+	else:
+		# Otherwise, we validate the timestamp.
+		hour   = int(e[8:10])
+		minute = int(e[10:12])
+		second = int(e[12:14])
+		if hour > 23:
+			return "INVALID: hour higher than 23. Check timestamp, or use YYYY-MM-DD."
+		if minute > 59:
+			return "INVALID: minute higher than 59. Check timestamp, or use YYYY-MM-DD."
+		if second > 59:
+			return "INVALID: second higher than 59. Check timestamp, or use YYYY-MM-DD."
+
+	return e
 
 def parse(params):
 	"""Parses form selections and returns them as a structured dictionary.
@@ -108,8 +170,8 @@ def parse(params):
 
 	output = {}
 	output["username"] = params["username"]
-	output["startdate"] = params["startdate"]
-	output["enddate"] = params["enddate"]
+	output["startdate"] = ""
+	output["enddate"] = ""
 	output["namespaces"] = []
 	output["noticeboards"] = []
 	output["refdesks"] = []
@@ -141,6 +203,21 @@ def parse(params):
 		if ("boxth" in item):
 			output["misc"].append(m["misc"]["teahouse"])
 	#return mapping()
+
+
+	# Now we need to validate the start dates and end dates, if they exist.
+
+	if (params["startdate"]):
+		output["startdate"] = valiDate(params["startdate"])
+
+	if (params["enddate"]):
+		output["enddate"] = valiDate(params["enddate"])
+
+	if (output["startdate"] != "") and (output["enddate"] != ""):
+		if int(output["startdate"]) > int(output["enddate"]):
+			output["startdate"] = "INVALID: Oldest date after newest date."
+			output["enddate"]   = "INVALID: Oldest date after newest date."
+
 	return output
 
 if __name__ == "__main__":
