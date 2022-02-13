@@ -21,11 +21,13 @@ def render(params):
 	footer =  """</body>"""
 	footer += "\n</html>"
 
-	dump = json.dumps(params, indent=4)
-	dump = dump.replace("\n", "<br />")
-	dump = dump.replace("  ", "&nbsp; ")
-
-
+	try:
+		dump = json.dumps(params, indent=4)
+		dump = dump.replace("\n", "<br />")
+		dump = dump.replace("  ", "&nbsp; ")
+	except TypeError:
+		dump = str(params)
+		
 	dump = header + dump + footer
 
 

@@ -4,7 +4,7 @@ docstring = """
  The first thing
 """
 
-def mapping():
+def mapping(key="checkbox"):
 	"""Return dictionary with checkbox IDs keyed to namespaces, long forms, and short forms.
 
 	Items are "namespaces", "noticeboards", "refdesks", "villagepumps" and "misc".
@@ -17,33 +17,33 @@ def mapping():
 	mappingDict = {}
 	mappingDict["namespaces"] = {
 		"01":  [0,    "",                       "MAIN"],
-		"01t": [1,    "Talk",                   "T"],
-		"02":  [2,    "User",                   "U"],
-		"02t": [3,    "User_talk",              "UT"],
-		"03":  [4,    "Wikipedia",              "WP"],
-		"03t": [5,    "Wikipedia_talk",         "WT"],
-		"04":  [6,    "File",                   "F"],
-		"04t": [7,    "File_talk",              "FT"],
-		"05":  [8,    "MediaWiki",              "MW"],
-		"05t": [9,    "MediaWiki_talk",         "MWT"],
-		"06":  [10,   "Template",               "T"],
-		"06t": [11,   "Template_talk",          "TT"],
-		"07":  [12,   "Help",                   "H"],
-		"07t": [13,   "Help_talk",              "HT"],
-		"08":  [14,   "Category",               "C"],
-		"08t": [15,   "Category_talk",          "CT"],
-		"09":  [100,  "Portal",                 "P"],
-		"09t": [101,  "Portal_talk",            "PT"],
-		"10":  [118,  "Draft",                  "D"],
-		"10t": [119,  "Draft_talk",             "DT"],
-		"11":  [710,  "TimedText",              "TT"],
-		"11t": [711,  "TimedText_talk",         "TTT"],
-		"12":  [828,  "Module",                 "M"],
-		"12t": [829,  "Module_talk",            "MT"],
-		"13":  [2300, "Gadget",                 "G"],
-		"13t": [2301, "Gadget_talk",            "GT"],
-		"14":  [2302, "Gadget_definition",      "GD"],
-		"14t": [2303, "Gadget_definition_talk", "GDT"]
+		"01t": [1,    "Talk:",                   "T"],
+		"02":  [2,    "User:",                   "U"],
+		"02t": [3,    "User_talk:",              "UT"],
+		"03":  [4,    "Wikipedia:",              "WP"],
+		"03t": [5,    "Wikipedia_talk:",         "WT"],
+		"04":  [6,    "File:",                   "F"],
+		"04t": [7,    "File_talk:",              "FT"],
+		"05":  [8,    "MediaWiki:",              "MW"],
+		"05t": [9,    "MediaWiki_talk:",         "MWT"],
+		"06":  [10,   "Template:",               "T"],
+		"06t": [11,   "Template_talk:",          "TT"],
+		"07":  [12,   "Help:",                   "H"],
+		"07t": [13,   "Help_talk:",              "HT"],
+		"08":  [14,   "Category:",               "C"],
+		"08t": [15,   "Category_talk:",          "CT"],
+		"09":  [100,  "Portal:",                 "P"],
+		"09t": [101,  "Portal_talk:",            "PT"],
+		"10":  [118,  "Draft:",                  "D"],
+		"10t": [119,  "Draft_talk:",             "DT"],
+		"11":  [710,  "TimedText:",              "TT"],
+		"11t": [711,  "TimedText_talk:",         "TTT"],
+		"12":  [828,  "Module:",                 "M"],
+		"12t": [829,  "Module_talk:",            "MT"],
+		"13":  [2300, "Gadget:",                 "G"],
+		"13t": [2301, "Gadget_talk:",            "GT"],
+		"14":  [2302, "Gadget_definition:",      "GD"],
+		"14t": [2303, "Gadget_definition_talk:", "GDT"]
   	}
 	mappingDict["noticeboards"] = {
 		"01":  [4, "Administrators'_noticeboard",               "AN"],
@@ -84,7 +84,17 @@ def mapping():
 		"teahouse":     [4, "Teahouse", "TH"]
 	}
 
-	return mappingDict
+	if (key == "checkbox"):
+		return mappingDict
+
+	if (key == "page"):
+		pageKeyDict = {}
+		for item in mappingDict:
+			pageKeyDict[item] = {}
+			for subitem in item:
+				pageKeyDict[item][subitem[1]] = [subitem[0], subitem[2]]
+		return pageKeyDict
+
 
 
 def parse(params):
@@ -97,6 +107,9 @@ def parse(params):
 	"""
 
 	output = {}
+	output["username"] = params["username"]
+	output["startdate"] = params["startdate"]
+	output["enddate"] = params["enddate"]
 	output["namespaces"] = []
 	output["noticeboards"] = []
 	output["refdesks"] = []
