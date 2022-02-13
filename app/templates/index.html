@@ -10,7 +10,7 @@
 
 <body class="client-js">
 <h1>Startist</h1>
-<p>This tool will analyze contributions, and return a report of all new sections started by a user. Searches can be customized to specific discussion boards, as well as specific namespaces.</p>
+<p>This tool finds all new sections started by a user. You can search by namespace, or on specific discussion pages.</p>
 <p></p>
 
 <div id="startistform">
@@ -248,10 +248,25 @@
 	</table>
 	</div>
 	</fieldset>
-</form>
-<br/>
 <br/>
 <center><button type="button" class="mw-ui-button mw-ui-progressive" id="clearall">Clear all selections</button></center>
+<br/><br/>
+	<fieldset>
+		<legend><b>Output format</b></legend>
+		<center>
+			<label for="HTML">HTML</label><!--
+			-->&nbsp;<input type="radio" id="HTML" name="format" value="HTML" checked="yepperoni">&nbsp; &nbsp;
+			<label for="CSV">CSV</label><!--
+			-->&nbsp;<input type="radio" id="CSV" name="format" value="CSV">&nbsp; &nbsp;
+			<label for="TSV">TSV</label><!--
+			-->&nbsp;<input type="radio" id="TSV" name="format" value="TSV">&nbsp; &nbsp;
+			<label for="JSON">JSON</label><!--
+			-->&nbsp;<input type="radio" id="JSON" name="format" value="JSON">&nbsp; &nbsp;
+			<label for="wt">Wikitext</label><!--
+			-->&nbsp;<input type="radio" id="wt" name="format" value="wt">
+		</center>
+	</fieldset>
+</form>
 </div>
 
 <img src="{{ url_for('static', filename='img/startist-logo.png') }}" alt="Wikipe-tan painting the future" style="float:right;">

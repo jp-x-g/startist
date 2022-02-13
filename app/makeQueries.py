@@ -75,8 +75,15 @@ def queryNamespace(ob, item, include=False):
 			# 2022-02-13T01:46:08Z
 			ts = result["timestamp"].replace("-", "").replace(":", "").replace("T", "").replace("Z", "")
 			if int(ts) > int(oldest):
-				ob["namespaces"][item[0]]["count"] += 1
-				ob["namespaces"][item[0]]["edits"][result["revid"]] = result
+				# If it's within the selected date rance.
+				#try:
+				if (result["comment"].find(ob["hotstring"]) != -1):
+					ob["namespaces"][item[0]]["count"] += 1
+					ob["namespaces"][item[0]]["edits"][result["revid"]] = result
+				#except:
+					#pass
+					# I am not sure how this could possibly generate a KeyError for "comment", but it did when processing a large request.
+					# Adding an exception handler caused the application to produce questionable output, so I'm not going to use this exception handler. I guess it can just crash and burn if you run it on all namespaces of someone with 50k edits.
 			else:
 				# If the timestamp of the rev being processed is older than the "oldest" cutoff:
 				# Set this to 0 to make the current iteration the last one.
@@ -88,6 +95,9 @@ def queryNamespace(ob, item, include=False):
 
 
 def queryPage(ob, item, prefix="", category="misc"):
+
+	# "Item" should look like:
+	# [4, "Administrators'_noticeboard", "AN"]
 	#ob['debug'] = ob['debug'] + "ns: " + str(item[0]) + " keys: " + str(ob["namespaces"].keys())
 	if (item[0] in ob["namespaces"].keys()):
 		pass
@@ -96,13 +106,39 @@ def queryPage(ob, item, prefix="", category="misc"):
 		ob = queryNamespace(ob, item)
 	if (category in ob) == False:
 		ob[category] = {}
-	ob[category][prefix + item[1]] = {}
-	ob[category][prefix + item[1]]["name"] = [item[1], item[2]]
+
+	prefixedName = prefix + item[1]
+	# prefixedName = "Wikipedia:" + "Administrators'_noticeboard"
+
+	ob[category][prefixedName] = {}
+	# Something like this:
+	# ob["noticeboards"]["Wikipedia:Administrators'_noticeboard"]
+
+	ob[category][prefixedName]["name"] = [item[1], item[2]]
+	# ob["noticeboards"]["Wikipedia:Administrators'_noticeboard"]["name"] = ["Administrators'_noticeboard", "AN"]
+
+
 	#ob["debug"] = "queryPage is running"
+
+	# The object has been initialized now, and queryNamespace has been run
+	# (whether invoked by the page selection or by the namespace being itself selected)
+
+	# Now we're going to go through the results and find just the ones from that page
+
+	for key in ob["namespaces"][item[0]]["edits"]:
+		value = ob["namespaces"][item[0]]["edits"][key]
+		if (str(value["title"]).replace("_", " ") == str(prefixedName).replace("_", " ")):
+			revisionId = value["revid"]
+			ob[category][prefixedName][revisionId] = value
+
+
 	return ob
 
 
 def query(params):
+
+	hotString = "*/ new section"
+
 	"""Main entry point for views.py: uses parseParams.py output to query en.wp API on namespaces, and filter by individual pages."""
 	output = {
 	"username": params["username"],
@@ -110,8 +146,7 @@ def query(params):
 	"enddate":  params["enddate"], 
 	"namespaces": {
 		},
-	"pages": {
-		},
+	"hotstring": hotString,
 	"debug": ""
 	}
 
@@ -131,7 +166,23 @@ def query(params):
 		output = queryPage(output, item, prefix="Wikipedia:", category="misc")
 		pass
 
-	return params, output
+
+
+	# All queries have been executed, and all data is stored.
+
+	# Now we will remove the results from every namespace that wasn't actually specified.
+	# That is, if you are just searching for edits on one page, you don't care about others in the same namespace, even if we had to query it to find those edits.
+	# 
+
+	for item in output["namespaces"]:
+		if output["namespaces"][item]["include"] == False:
+			#del output["namespaces"][item]
+			output["namespaces"][item]["edits"] = {}
+
+
+
+
+	return params, "<br/>--------------------------------------------------<br/>", output
 
 
 if __name__ == "__main__":
