@@ -17,3 +17,5 @@ def about():
 @app.route("/results")
 def showResults():
 	return(search.doSearch(request.args))
+	#return(render_template(search.doSearch(request.args)))
+	# This doesn't work, even though it ought to.
