@@ -15,8 +15,9 @@ def mapping(key="checkbox"):
 	--- Abbreviation (string, like "WP" or "BOTN")
 	"""
 	mappingDict = {}
+
 	mappingDict["namespaces"] = {
-		"01":  [0,    "",                       "MAIN"],
+		"01":  [0,    "",                        "MAIN"],
 		"01t": [1,    "Talk:",                   "T"],
 		"02":  [2,    "User:",                   "U"],
 		"02t": [3,    "User_talk:",              "UT"],
@@ -90,10 +91,46 @@ def mapping(key="checkbox"):
 	if (key == "page"):
 		pageKeyDict = {}
 		for item in mappingDict:
+			# for "namespaces", "noticeboards", etc
 			pageKeyDict[item] = {}
 			for subitem in item:
+				# for "0", "1", etc
 				pageKeyDict[item][subitem[1]] = [subitem[0], subitem[2]]
 		return pageKeyDict
+
+	if (key == "namespaces"):
+		namespaceDict = {
+		0:    ["",                        "MAIN"],
+		1:    ["Talk:",                   "T"],
+		2:    ["User:",                   "U"],
+		3:    ["User_talk:",              "UT"],
+		4:    ["Wikipedia:",              "WP"],
+		5:    ["Wikipedia_talk:",         "WT"],
+		6:    ["File:",                   "F"],
+		7:    ["File_talk:",              "FT"],
+		8:    ["MediaWiki:",              "MW"],
+		9:    ["MediaWiki_talk:",         "MWT"],
+		10:   ["Template:",               "T"],
+		11:   ["Template_talk:",          "TT"],
+		12:   ["Help:",                   "H"],
+		13:   ["Help_talk:",              "HT"],
+		14:   ["Category:",               "C"],
+		15:   ["Category_talk:",          "CT"],
+		100:  ["Portal:",                 "P"],
+		101:  ["Portal_talk:",            "PT"],
+		118:  ["Draft:",                  "D"],
+		119:  ["Draft_talk:",             "DT"],
+		710:  ["TimedText:",              "TT"],
+		711:  ["TimedText_talk:",         "TTT"],
+		828:  ["Module:",                 "M"],
+		829:  ["Module_talk:",            "MT"],
+		2300: ["Gadget:",                 "G"],
+		2301: ["Gadget_talk:",            "GT"],
+		2302: ["Gadget_definition:",      "GD"],
+		2303: ["Gadget_definition_talk:", "GDT"]
+		}
+		return namespaceDict
+
 
 
 def valiDate(d):
@@ -172,11 +209,18 @@ def parse(params):
 	output["username"] = params["username"]
 	output["startdate"] = ""
 	output["enddate"] = ""
+	output["format"] = params["format"]
+	# Initialize metadata fields.
+
 	output["namespaces"] = []
 	output["noticeboards"] = []
 	output["refdesks"] = []
 	output["villagepumps"] = []
 	output["misc"] = []
+	# Initialize namespace/page search fields.
+
+
+
 
 	m = mapping()
 	#return m

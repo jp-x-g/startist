@@ -18,6 +18,7 @@ def queryNamespace(ob, item, include=False):
 
 	continueQuerying = 1
 	if ((ob["startdate"].find("INVALID") != -1) or (ob["enddate"].find("INVALID") != -1)):
+		ob["debug"] = "Invalid date detected"
 		return ob
 
 		#return "Invalid date stamps. Start date: " + ob["startdate"].replace("INVALID:", "") + " End date: " + ob["enddate"].replace("INVALID:", "")
@@ -45,7 +46,7 @@ def queryNamespace(ob, item, include=False):
 	sess = requests.Session()
 	apiUrl = "https://en.wikipedia.org/w/api.php"
 	# Open session.
-	ob["debug"] = "opened session"
+	ob["debug"] = "Opened session for API queries"
 
 	while (continueQuerying == 1):
 		queryParams = {
@@ -58,11 +59,11 @@ def queryNamespace(ob, item, include=False):
 		"uccontinue": continueTimestamp
 		}
 		# The next line is for debug only.
-		ob["query"] = queryParams
-
+		ob["debug"] = "Current query: " + str(queryParams)
 		response = sess.get(url=apiUrl, params=queryParams)
 		r = response.json()
 		#ob["response"] = r
+		ob["debug"] = ob["debug"] + " . Query now received"
 
 		if "continue" in r:
 			continueTimestamp = r["continue"]["uccontinue"]
@@ -70,25 +71,26 @@ def queryNamespace(ob, item, include=False):
 		else:
 			# Set this to 0 to make the current iteration the last one.
 			continueQuerying = 0
-
+			ob["debug"] = "Query response had no 'continue', processing last batch of results"
 		for result in r["query"]["usercontribs"]:
 			# 2022-02-13T01:46:08Z
 			ts = result["timestamp"].replace("-", "").replace(":", "").replace("T", "").replace("Z", "")
 			if int(ts) > int(oldest):
-				# If it's within the selected date rance.
-				#try:
-				if (result["comment"].find(ob["hotstring"]) != -1):
-					ob["namespaces"][item[0]]["count"] += 1
-					ob["namespaces"][item[0]]["edits"][result["revid"]] = result
-				#except:
-					#pass
+				# If it's within the selected date range.
+				try:
+					if (result["comment"].find(ob["hotstring"]) != -1):
+						ob["namespaces"][item[0]]["count"] += 1
+						ob["namespaces"][item[0]]["edits"][result["revid"]] = result
+				except:
+					ob["exceptions"] += 1
 					# I am not sure how this could possibly generate a KeyError for "comment", but it did when processing a large request.
-					# Adding an exception handler caused the application to produce questionable output, so I'm not going to use this exception handler. I guess it can just crash and burn if you run it on all namespaces of someone with 50k edits.
+					# Handling the exception seemed to work fine.
 			else:
 				# If the timestamp of the rev being processed is older than the "oldest" cutoff:
 				# Set this to 0 to make the current iteration the last one.
 				continueQuerying = 0
 	
+	ob["debug"] = "queryNamespace completed, returning parsed results"
 
 	return ob
 
@@ -99,6 +101,7 @@ def queryPage(ob, item, prefix="", category="misc"):
 	# "Item" should look like:
 	# [4, "Administrators'_noticeboard", "AN"]
 	#ob['debug'] = ob['debug'] + "ns: " + str(item[0]) + " keys: " + str(ob["namespaces"].keys())
+	ob["debug"] = "queryPage is running"
 	if (item[0] in ob["namespaces"].keys()):
 		pass
 		# I had to debug this for about an hour and a half. Stick a fork in me...
@@ -110,15 +113,12 @@ def queryPage(ob, item, prefix="", category="misc"):
 	prefixedName = prefix + item[1]
 	# prefixedName = "Wikipedia:" + "Administrators'_noticeboard"
 
-	ob[category][prefixedName] = {}
+	ob[category][prefixedName] = {
+		"count": 0,
+		"name": [item[1], item[2]]
+		}
 	# Something like this:
 	# ob["noticeboards"]["Wikipedia:Administrators'_noticeboard"]
-
-	ob[category][prefixedName]["name"] = [item[1], item[2]]
-	# ob["noticeboards"]["Wikipedia:Administrators'_noticeboard"]["name"] = ["Administrators'_noticeboard", "AN"]
-
-
-	#ob["debug"] = "queryPage is running"
 
 	# The object has been initialized now, and queryNamespace has been run
 	# (whether invoked by the page selection or by the namespace being itself selected)
@@ -130,24 +130,28 @@ def queryPage(ob, item, prefix="", category="misc"):
 		if (str(value["title"]).replace("_", " ") == str(prefixedName).replace("_", " ")):
 			revisionId = value["revid"]
 			ob[category][prefixedName][revisionId] = value
+			# Store the diff in the object.
+			ob[category][prefixedName]["count"] += 1
+			# Increment the count by one.
 
 
 	return ob
 
 
 def query(params):
-
+	"""Main entry point for views.py: uses parseParams.py output to query en.wp API on namespaces, and filter by individual pages."""
 	hotString = "*/ new section"
 
-	"""Main entry point for views.py: uses parseParams.py output to query en.wp API on namespaces, and filter by individual pages."""
 	output = {
 	"username": params["username"],
 	"startdate": params["startdate"], 
 	"enddate":  params["enddate"], 
-	"namespaces": {
-		},
+	"format": params["format"],
 	"hotstring": hotString,
-	"debug": ""
+	"debug": "makeQueries initializing",
+	"exceptions": 0,
+	"namespaces": {
+		}
 	}
 
 	# This is a special case, because the entire namespace is being searched, not just one page.
@@ -182,7 +186,7 @@ def query(params):
 
 
 
-	return params, "<br/>--------------------------------------------------<br/>", output
+	return [params, output]
 
 
 if __name__ == "__main__":

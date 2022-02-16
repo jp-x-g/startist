@@ -1,0 +1,21 @@
+<!doctype html> 
+<html> 
+<head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+  <meta name=viewport content="width=device-width, initial-scale=1">
+  <title>Startist</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/startist.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/mw.ui.css') }}">
+</head>
+
+<body class="client-js">
+<h1>Startist</h1>
+<p>This tool finds all new sections started by a user. You can search by namespace, or on specific discussion pages.</p>
+<p></p>
+
+{{ content }}
+
+<footer>Made by <a href="https://github.com/jp-x-g/">JPxG</a></footer>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>
