@@ -102,16 +102,9 @@ def renderHTMLOld(params, info):
 					newCells= newCell(heading) + newCell(str(info[cat][item]["count"]))
 					table += newRow(newCells)
 
-
 		pass
 
-
-
-
 	table += """\n</table>"""
-
-
-
 
 	# Okay, all the actual data has been added, we will now close everything up.
 	footer =  """</body>"""
@@ -132,13 +125,96 @@ def renderHTMLOld(params, info):
 
 
 def renderHTML(params, info):
+
+	# Yeah, this is about to get absolutely brutal.
+	# I had intended to just have this script render the output to a string, and pass that back to views.py.
+	# It turns out what I needed to do was have views.py invoke a Jinja template with this program's output as an argument.
+	# This didn't work well with how I'd designed the json from previous scripts, so this is hideous.
+
 	html = """<a href="https://asdf.com">Asdf</a>"""
 	html = {}
-	html[""] = 
+	html["summary"] = ["asdf", "qwer"]
+
+	titles = {
+	"namespaces":   "Namespaces",
+	"noticeboards": "Noticeboards",
+	"refdesks":     "Reference desks",
+	"villagepumps": "Village pumps",
+	"misc":         "Miscellaneous",
+	}
+
+	nsMapping = parseParams.mapping(key="namespaces")
+	# e.g. nsMapping["14"] is ["Category:", "C"]
+
+	jinjaInput = {}
+	jinjaInput["summary"] = {}
+	jinjaInput["wtf"] = 0
+	jinjaInput["wtf2"] = 0
 
 
+	for cat in ["namespaces", "noticeboards", "refdesks", "villagepumps", "misc"]:
+		if cat in info:
+			jinjaInput["summary"][titles[cat]] = []
+			if cat == "namespaces":
+				for ns in info["namespaces"]:
+					if info["namespaces"][ns]["include"] != False:
+						nsString = str(nsMapping[ns][0]).replace("_", " ").replace(":", "")
+						# Remove colons, underscores to render table row heading.
+						if nsString == "":
+							nsString = "(main)"
+						jinjaInput["summary"][titles[cat]].append([nsString, str(info["namespaces"][ns]["count"])])
+						# Append a two-item array: the namespace string and the section count from it.
+			else:
+				for item in info[cat]:
+					heading = str(item)
+					if (cat == "noticeboards") or (cat == "refdesks") or (cat == "villagepumps"):
+						heading = heading[(heading.find(":")+1):].replace("_", " ")
+						# Remove namespace from the heading, and replace "_" with " "
+					jinjaInput["summary"][titles[cat]].append([heading, str(info[cat][item]["count"])])
+					# Same as above: heading and section count.
 
-	return html
+		pass
+	# End of summary-generation code. Now moving on to the edits.
+
+	jinjaInput["edits"] = {}
+	for cat in ["namespaces", "noticeboards", "refdesks", "villagepumps", "misc"]:
+		if cat in info:
+			# If info has a ["namespaces"], ["noticeboards"], etc.
+			if cat == "namespaces":
+				for ns in info["namespaces"]:
+					# For each namespace in info ("4", "5", etc)
+					if info["namespaces"][ns]["include"] != False:
+							for edit in info["namespaces"][ns]["edits"]:
+								info["namespaces"][ns]["edits"][edit]["ns"] = nsMapping[info["namespaces"][ns]["edits"][edit]["ns"]][0].replace("_", " ")
+								# Replace "3" with "User talk:", for example.
+								if (info["namespaces"][ns]["edits"][edit]["title"].find(info["namespaces"][ns]["edits"][edit]["ns"]) == 0):
+									info["namespaces"][ns]["edits"][edit]["title"] = info["namespaces"][ns]["edits"][edit]["title"].replace(info["namespaces"][ns]["edits"][edit]["ns"], "", 1)
+									# Replace the first instance of the namespace string.
+									# Talk:Dogs becomes Dogs, for example.
+								try:
+									jinjaInput["edits"][info["namespaces"][item]["edits"][edit]["revid"]] = (info["namespaces"][ns]["edits"][edit])
+								except KeyError:
+									jinjaInput["wtf"] += 1
+									# Stupid kludge. Do not deploy this.
+			else:
+				for item in info[cat]:
+					# for everything in info["noticeboards"] or info ["refdesks"]...
+					# i.e. item would be "Wikipedia:Teahouse" or "Wikipedia:Help_desk"
+						if "edits" in info[cat][item]:
+							for edit in info[cat][item]["edits"]:
+								try:
+									info[cat][item]["edits"][edit]["ns"] = nsMapping[info[cat][item]["edits"][edit]["ns"]][0].replace("_", " ")
+								except KeyError:
+									jinjaInput["wtf2"] += 1
+									# Stupid kludge.
+								# Replace "3" with "User talk:", for example.
+								if (info[cat][item]["edits"][edit]["title"].find(info[cat][item]["edits"][edit]["ns"]) == 0):
+									info[cat][item]["edits"][edit]["title"] = info[cat][item]["edits"][edit]["title"].replace(info[cat][item]["edits"][edit]["ns"], "", 1)
+									# Replace the first instance of the namespace string.
+									# Talk:Dogs becomes Dogs, for example.
+								jinjaInput["edits"][info[cat][item]["edits"][edit]["revid"]] = (info[cat][item]["edits"][edit])
+
+	return jinjaInput
 
 
 def render(renderInput):

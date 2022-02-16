@@ -13,9 +13,62 @@
 <p>This tool finds all new sections started by a user. You can search by namespace, or on specific discussion pages.</p>
 <p></p>
 
-{{ content }}
+<fieldset>
+	<legend><center><button type="button" class="collapser collapser-change mw-ui-button mw-ui-progressive" id="collapser1">Show summaries</button></center></legend>
+	<div class="collapsecontent" id="collapsecontent1">
+		<table style="margin-left: auto; margin-right: auto;">
+{% for item in inp["summary"] %}
+		<tr>
+			<td colspan="2" style="text-align: center;"><b>{{ item }}</b></td>
+		</tr>
+{% for subitem in inp["summary"][item] %}
+		<tr>
+			<td>{{ subitem[0] }}</td>
+			<td>{{ subitem[1] }}</td>
+		</tr>
+{% endfor %}
+{% endfor %}
+		</table>
+	</div>
+</fieldset><!-- End of summary section -->
+<br/>
+<table style="margin-left: auto; margin-right: auto;">
+	<tr>
+		<th style="min-width: 9em;">
+			Date
+		</th>
+		<th style="min-width: 6em;">
+			Namespace
+		</th>
+		<th style="min-width: 16em;">
+			Page title
+		</th>
+		<th style="min-width: 9em;">
+			Section name
+		</th>
+	</tr>
 
+{% for item in inp["edits"] %}
+	<tr>
+		<td>
+			<a href="https://en.wikipedia.org/wiki/Special:Diff/{{ inp['edits'][item]['revid'] }}">{{ inp['edits'][item]['timestamp'] }}</a>
+		</td>
+		<td style="text-align: right;">
+			{{ inp["edits"][item]["ns"] }}
+		</td>
+		<td>
+			{{ inp["edits"][item]["title"] }}
+		</td>
+		<td>
+			{{ inp["edits"][item]["comment"] }}
+		</td>
+	</tr>
+	{% endfor %}
+</table>
+<!--
+	{{ inp }}
+-->
 <footer>Made by <a href="https://github.com/jp-x-g/">JPxG</a></footer>
-<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+<script src="{{ url_for('static', filename='js/collapsers.js') }}"></script>
 </body>
 </html>

@@ -115,7 +115,8 @@ def queryPage(ob, item, prefix="", category="misc"):
 
 	ob[category][prefixedName] = {
 		"count": 0,
-		"name": [item[1], item[2]]
+		"name": [item[1], item[2]],
+		"edits": {}
 		}
 	# Something like this:
 	# ob["noticeboards"]["Wikipedia:Administrators'_noticeboard"]
@@ -129,7 +130,7 @@ def queryPage(ob, item, prefix="", category="misc"):
 		value = ob["namespaces"][item[0]]["edits"][key]
 		if (str(value["title"]).replace("_", " ") == str(prefixedName).replace("_", " ")):
 			revisionId = value["revid"]
-			ob[category][prefixedName][revisionId] = value
+			ob[category][prefixedName]["edits"][revisionId] = value
 			# Store the diff in the object.
 			ob[category][prefixedName]["count"] += 1
 			# Increment the count by one.
