@@ -60,7 +60,7 @@
 			{{ inp["edits"][item]["title"] }}
 		</td>
 		<td>
-			{{ inp["edits"][item]["comment"] }}
+			<a href="{{ inp['edits'][item]['sectionlink'] }}">{{ inp["edits"][item]["comment"] }}</a>
 		</td>
 	</tr>
 	{% endfor %}

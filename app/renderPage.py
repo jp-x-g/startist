@@ -192,7 +192,20 @@ def renderHTML(params, info):
 									# Replace the first instance of the namespace string.
 									# Talk:Dogs becomes Dogs, for example.
 								try:
-									jinjaInput["edits"][info["namespaces"][item]["edits"][edit]["revid"]] = (info["namespaces"][ns]["edits"][edit])
+									revId = info["namespaces"][ns]["edits"][edit]["revid"]
+									jinjaInput["edits"][revId] = (info["namespaces"][ns]["edits"][edit])
+
+									sectionTitle = info["namespaces"][ns]["edits"][edit]["comment"]
+									sectionTitle = sectionTitle.replace("/* ", "")
+									sectionTitle = sectionTitle[0:sectionTitle.find(" */ new section")]
+									# Strip section title from edit summary.
+									articleTitle = info["namespaces"][ns]["edits"][edit]["title"]
+									# Get article title.
+									sectionTitle = "https://en.wikipedia.org/wiki/" + info["namespaces"][ns]["edits"][edit]["ns"] + articleTitle + "#" + sectionTitle
+									# Construct URL.
+									sectionTitle = sectionTitle.replace(" ", "_")
+									# Put in underscores to make the URL work.
+									jinjaInput["edits"][revId]["sectionlink"] = sectionTitle
 								except KeyError:
 									jinjaInput["wtf"] += 1
 									# Stupid kludge. Do not deploy this.
@@ -203,7 +216,14 @@ def renderHTML(params, info):
 						if "edits" in info[cat][item]:
 							for edit in info[cat][item]["edits"]:
 								try:
-									info[cat][item]["edits"][edit]["ns"] = nsMapping[info[cat][item]["edits"][edit]["ns"]][0].replace("_", " ")
+									nameString = info[cat][item]["edits"][edit]["ns"]
+
+									if nameString in nsMapping:
+										nameString = nsMapping[nameString][0].replace("_", " ")
+
+									info[cat][item]["edits"][edit]["ns"] = nameString
+
+									# info[cat][item]["edits"][edit]["ns"] = "ooga booga"
 								except KeyError:
 									jinjaInput["wtf2"] += 1
 									# Stupid kludge.
@@ -213,6 +233,18 @@ def renderHTML(params, info):
 									# Replace the first instance of the namespace string.
 									# Talk:Dogs becomes Dogs, for example.
 								jinjaInput["edits"][info[cat][item]["edits"][edit]["revid"]] = (info[cat][item]["edits"][edit])
+
+								sectionTitle = info[cat][item]["edits"][edit]["comment"]
+								sectionTitle = sectionTitle.replace("/* ", "")
+								sectionTitle = sectionTitle[0:sectionTitle.find(" */ new section")]
+								# Strip section title from edit summary.
+								articleTitle = info[cat][item]["edits"][edit]["title"]
+								# Get article title.
+								sectionTitle = "https://en.wikipedia.org/wiki/" + info[cat][item]["edits"][edit]["ns"] + articleTitle + "#" + sectionTitle
+								# Construct URL.
+								sectionTitle = sectionTitle.replace(" ", "_")
+								# Put in underscores to make the URL work.
+								jinjaInput["edits"][info[cat][item]["edits"][edit]["revid"]]["sectionlink"] = sectionTitle
 
 	return jinjaInput
 

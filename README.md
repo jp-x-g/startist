@@ -22,8 +22,8 @@ Structure:
 Basic invocation of the program:
 ```
 cd startist
-python -m venv env
-source env/bin/activate
+python -m venv venv
+source venv/bin/activate
 export FLASK_APP=app.py
 export FLASK_ENV=development
 ```

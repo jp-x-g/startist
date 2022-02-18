@@ -4,6 +4,11 @@ docstring = """
  The first thing
 """
 
+from datetime import date
+from datetime import datetime
+from datetime import timedelta
+# For validating timestamps.
+
 def mapping(key="checkbox"):
 	"""Return dictionary with checkbox IDs keyed to namespaces, long forms, and short forms.
 
@@ -219,9 +224,6 @@ def parse(params):
 	output["misc"] = []
 	# Initialize namespace/page search fields.
 
-
-
-
 	m = mapping()
 	#return m
 
@@ -249,7 +251,7 @@ def parse(params):
 	#return mapping()
 
 
-	# Now we need to validate the start dates and end dates, if they exist.
+	# Now we need to validate the start (oldest) dates and end (newest) dates, if they exist.
 
 	if (params["startdate"]):
 		output["startdate"] = valiDate(params["startdate"])
@@ -257,12 +259,35 @@ def parse(params):
 	if (params["enddate"]):
 		output["enddate"] = valiDate(params["enddate"])
 
+	today = datetime.today()
+	daysOffset = 30 * 6
+	offset = timedelta(
+		days=daysOffset
+	)
+	backthen = today - offset
+	backthenFormat = backthen.strftime("%Y%m%d") + "000000"
+
+	if output["startdate"] == "":
+		output["startdate"] = backthenFormat
+		# If there's no oldest date provided, set it to the longest offset.
+
+	oldestYYYYMMDD = output["startdate"][0:8]
+	oldestDate = datetime.strptime(oldestYYYYMMDD, "%Y%m%d")
+	# Create a datetime object from the oldest date.
+
+	if oldestDate < backthen:
+		output["startdate"] = backthenFormat
+		# If oldest date is too far back, set it to the oldest allowed date.
+
+
 	if (output["startdate"] != "") and (output["enddate"] != ""):
 		if int(output["startdate"]) > int(output["enddate"]):
 			output["startdate"] = "INVALID: Oldest date after newest date."
 			output["enddate"]   = "INVALID: Oldest date after newest date."
 
+
 	return output
+	# This is being called from views.py.
 
 if __name__ == "__main__":
 	print(docstring)

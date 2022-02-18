@@ -11,6 +11,8 @@ Instead, it imports other programs to do them.
 Otherwise, it would be unimaginably long and hard to work with.
 """
 
+# This probably isn't necessary - JPxG, Feb 16 2022
+
 from app import parseParams
 from app import makeQueries
 from app import renderPage

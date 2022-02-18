@@ -93,7 +93,7 @@ def queryNamespace(ob, item, include=False):
 	ob["debug"] = "queryNamespace completed, returning parsed results"
 
 	return ob
-
+	# This returns ob to query, but also sometimes to queryPage.
 
 
 def queryPage(ob, item, prefix="", category="misc"):
@@ -135,9 +135,8 @@ def queryPage(ob, item, prefix="", category="misc"):
 			ob[category][prefixedName]["count"] += 1
 			# Increment the count by one.
 
-
 	return ob
-
+	# This returns ob to, most likely, query.
 
 def query(params):
 	"""Main entry point for views.py: uses parseParams.py output to query en.wp API on namespaces, and filter by individual pages."""
@@ -184,11 +183,8 @@ def query(params):
 			#del output["namespaces"][item]
 			output["namespaces"][item]["edits"] = {}
 
-
-
-
 	return [params, output]
-
+	# This is the final output of the script, which is probably being returned to views.py.
 
 if __name__ == "__main__":
 	print(docstring)
