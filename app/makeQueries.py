@@ -3,6 +3,10 @@ docstring = """
  (Placeholder)
 """
 import requests
+from datetime import date
+from datetime import datetime
+from datetime import timedelta
+# For validating timestamps.
 
 def queryNamespace(ob, item, include=False):
 
@@ -62,6 +66,7 @@ def queryNamespace(ob, item, include=False):
 		ob["debug"] = "Current query: " + str(queryParams)
 		response = sess.get(url=apiUrl, params=queryParams)
 		r = response.json()
+		ob["totalQueries"] += 1
 		#ob["response"] = r
 		ob["debug"] = ob["debug"] + " . Query now received"
 
@@ -74,11 +79,13 @@ def queryNamespace(ob, item, include=False):
 			ob["debug"] = "Query response had no 'continue', processing last batch of results"
 		for result in r["query"]["usercontribs"]:
 			# 2022-02-13T01:46:08Z
+			ob["totalResults"] += 1
 			ts = result["timestamp"].replace("-", "").replace(":", "").replace("T", "").replace("Z", "")
 			if int(ts) > int(oldest):
 				# If it's within the selected date range.
 				try:
 					if (result["comment"].find(ob["hotstring"]) != -1):
+						ob["totalHits"] += 1
 						ob["namespaces"][item[0]]["count"] += 1
 						ob["namespaces"][item[0]]["edits"][result["revid"]] = result
 				except:
@@ -149,6 +156,9 @@ def query(params):
 	"format": params["format"],
 	"hotstring": hotString,
 	"debug": "makeQueries initializing",
+	"totalQueries": 0,
+	"totalResults": 0,
+	"totalHits": 0,
 	"exceptions": 0,
 	"namespaces": {
 		}
@@ -182,6 +192,14 @@ def query(params):
 		if output["namespaces"][item]["include"] == False:
 			#del output["namespaces"][item]
 			output["namespaces"][item]["edits"] = {}
+
+
+	# Now for the last step -- seeing how long this whole business took to run.
+	timeNow = datetime.now()
+	timeThen = datetime.strptime(params["runstamp"], "%Y%m%d%H%M%S%f")
+	elapsed = timeNow - timeThen
+	params["finished"] = timeNow.strftime("%Y%m%d%H%M%S%f")
+	params["elapsed"] = elapsed.total_seconds() 
 
 	return [params, output]
 	# This is the final output of the script, which is probably being returned to views.py.

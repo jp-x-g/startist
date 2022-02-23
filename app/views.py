@@ -7,6 +7,8 @@ from app import parseParams
 from app import makeQueries
 from app import renderPage
 
+from app import logProfile
+
 from flask import render_template
 from flask import request
 
@@ -20,14 +22,21 @@ def about():
 
 @app.route("/results")
 def showResults():
-	#return (search.doSearch(request.args))
-	# Simple thing that works. This doesn't invoke Jinja, though, so we won't use it.
 	parsedParams = parseParams.parse(request.args)
+	# Parse parameters using parseParams.py.
 	results = makeQueries.query(parsedParams)
+	# Use those parameters to make queries, using makeQueries.py.
+	
+	logProfile.log(results)
+	# Store some basic profiling information (number of queries, timestamp, etc)
+
+	renderOutput = renderPage.render(results)
+	# Use the query output to render a page, using renderPage.py.
+	# If the params say "HTML", it'll render a Jinja template.
+	# Otherwise, it's just going to return whatever the user asked for.
+
 
 	if results[0]["format"] == "HTML":
-		return render_template("results.html", inp=renderPage.render(results))
+		return render_template("results.html", inp=renderOutput)
 	else:
-		return renderPage.render(results)
-	#return(render_template(search.doSearch(request.args)))
-	# This doesn't work, even though it ought to.
+		return renderOutput

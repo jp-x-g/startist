@@ -3,14 +3,18 @@
 <head> 
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
   <meta name=viewport content="width=device-width, initial-scale=1">
-  <title>Startist</title>
+  <title>Startist: {{ inp["profile"]["username"] }}</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/startist.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/mw.ui.css') }}">
 </head>
 
 <body class="client-js">
-<h1>Startist</h1>
-<p>This tool finds all new sections started by a user. You can search by namespace, or on specific discussion pages.</p>
+<form method="get" action="/" style="float: right;" >
+    <button type="submit" class="mw-ui-button mw-ui-progressive" id="goback">Go back</button>
+</form>
+<h1>Search results for {{ inp["profile"]["username"] }} ({{ inp["profile"]["totalHits"] }})</h1>
+<p>I looked for all new sections (with <b>{{ inp["profile"]["startdate"] }}</b> as the earliest). I found <b>{{ inp["profile"]["totalHits"] }}</b> (out of <b>{{ inp["profile"]["totalResults"] }}</b> total edits in the selected namespaces and pages).</p>
+<p><em>This took <b>{{ inp["profile"]["elapsed"] }}</b> seconds, and <b>{{ inp["profile"]["totalQueries"] }}</b> API queries.</em></p>
 <p></p>
 
 <fieldset>

@@ -123,7 +123,6 @@ def renderHTMLOld(params, info):
 
 	return dump
 
-
 def renderHTML(params, info):
 
 	# Yeah, this is about to get absolutely brutal.
@@ -148,6 +147,18 @@ def renderHTML(params, info):
 
 	jinjaInput = {}
 	jinjaInput["summary"] = {}
+	jinjaInput["profile"] = {
+	"username":     params["username"],
+	"startdate":    params["startdate"],
+	"enddate":      params["enddate"],
+	"format":       params["format"],
+	"runstamp":     params["runstamp"],
+	"finished":     params["finished"],
+	"elapsed":      params["elapsed"],
+	"totalQueries": info["totalQueries"],
+	"totalResults": info["totalResults"],
+	"totalHits":    info["totalHits"]
+	}
 	jinjaInput["wtf"] = 0
 	jinjaInput["wtf2"] = 0
 
@@ -248,6 +259,8 @@ def renderHTML(params, info):
 
 	return jinjaInput
 
+	# Note that this is being parsed with results.html.
+
 
 def render(renderInput):
 	params = renderInput[0]
@@ -265,6 +278,9 @@ def render(renderInput):
 		return renderCSV(params, info)
 	elif (info["format"] == "TSV"):
 		return renderTSV(params, info)
+
+
+
 
 if __name__ == "__main__":
 	print(docstring)

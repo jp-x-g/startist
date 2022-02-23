@@ -215,7 +215,12 @@ def parse(params):
 	output["startdate"] = ""
 	output["enddate"] = ""
 	output["format"] = params["format"]
+	output["runstamp"] = ""
 	# Initialize metadata fields.
+
+	output["finished"] = ""
+	output["elapsed"] = ""
+	# These won't exist until makeQueries finishes, but let's initialize them here.
 
 	output["namespaces"] = []
 	output["noticeboards"] = []
@@ -285,6 +290,9 @@ def parse(params):
 			output["startdate"] = "INVALID: Oldest date after newest date."
 			output["enddate"]   = "INVALID: Oldest date after newest date."
 
+	# Now we will come up with a key for this query, to be used for performance logging.
+
+	output["runstamp"] = datetime.now().strftime("%Y%m%d%H%M%S%f")
 
 	return output
 	# This is being called from views.py.
