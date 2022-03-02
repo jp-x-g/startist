@@ -4,6 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
   <meta name=viewport content="width=device-width, initial-scale=1">
   <title>Startist: {{ inp["profile"]["username"] }}</title>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/x-icon" />
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/startist.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/mw.ui.css') }}">
 </head>
@@ -13,14 +14,13 @@
     <button type="submit" class="mw-ui-button mw-ui-progressive" id="goback">Go back</button>
 </form>
 <h1>Search results for {{ inp["profile"]["username"] }} ({{ inp["profile"]["totalHits"] }})</h1>
-<p>I looked for all new sections (with <b>{{ inp["profile"]["startdate"] }}</b> as the earliest). I found <b>{{ inp["profile"]["totalHits"] }}</b> (out of <b>{{ inp["profile"]["totalResults"] }}</b> total edits in the selected namespaces and pages).</p>
+<p>I looked for all new sections (with <b>{{ inp["profile"]["startdate"][0:4] }}-{{ inp["profile"]["startdate"][4:6] }}-{{ inp["profile"]["startdate"][6:8] }}</b> as the earliest). I found <b>{{ inp["profile"]["totalHits"] }}</b> (out of <b>{{ inp["profile"]["totalResults"] }}</b> total edits in the selected namespaces and pages).</p>
 <p><em>This took <b>{{ inp["profile"]["elapsed"] }}</b> seconds, and <b>{{ inp["profile"]["totalQueries"] }}</b> API queries.</em></p>
-<p></p>
 
 <fieldset>
 	<legend><center><button type="button" class="collapser collapser-change mw-ui-button mw-ui-progressive" id="collapser1">Show summaries</button></center></legend>
 	<div class="collapsecontent" id="collapsecontent1">
-		<table style="margin-left: auto; margin-right: auto;">
+		<table style="margin-left: auto; margin-right: auto;" id="resultsTable">
 {% for item in inp["summary"] %}
 		<tr>
 			<td colspan="2" style="text-align: center;"><b>{{ item }}</b></td>
@@ -35,19 +35,20 @@
 		</table>
 	</div>
 </fieldset><!-- End of summary section -->
-<br/>
-<table style="margin-left: auto; margin-right: auto;">
+<br />
+<p><center>The table below can be sorted by different columns (in ascending or descending order) by clicking the headers.</center></p>
+<table style="margin-left: auto; margin-right: auto;" id="editsTable">
 	<tr>
-		<th style="min-width: 9em;">
+		<th style="min-width: 9em;" onclick="sortTable(0), 'editsTable'">
 			Date
 		</th>
-		<th style="min-width: 6em;">
+		<th style="min-width: 6em;" onclick="sortTable(1), 'editsTable'">
 			Namespace
 		</th>
-		<th style="min-width: 16em;">
+		<th style="min-width: 16em;" onclick="sortTable(2), 'editsTable'">
 			Page title
 		</th>
-		<th style="min-width: 9em;">
+		<th style="min-width: 9em;" onclick="sortTable(3), 'editsTable'">
 			Section name
 		</th>
 	</tr>
@@ -72,7 +73,8 @@
 <!--
 	{{ inp }}
 -->
-<footer>Made by <a href="https://github.com/jp-x-g/">JPxG</a></footer>
+<footer><center>This software was made by <a href="https://github.com/jp-x-g/">JPxG</a><br/>Bug reports, comments and feedback go on <a href="https://en.wikipedia.org/wiki/User_talk:JPxG">his talk page</a><br/>Source code is <a href="https://github.com/jp-x-g/startist">on GitHub</a><br/>Hosting provided by <a href="https://wikitech.wikimedia.org/wiki/Portal:Toolforge">Toolforge</a></center></footer>
 <script src="{{ url_for('static', filename='js/collapsers.js') }}"></script>
+<script src="{{ url_for('static', filename='js/tablesort.js') }}"></script>
 </body>
 </html>

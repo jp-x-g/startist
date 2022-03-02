@@ -281,9 +281,9 @@ def parse(params):
 	# Create a datetime object from the oldest date.
 
 	if oldestDate < backthen:
-		output["startdate"] = backthenFormat
+		#output["startdate"] = backthenFormat
 		# If oldest date is too far back, set it to the oldest allowed date.
-
+		pass
 
 	if (output["startdate"] != "") and (output["enddate"] != ""):
 		if int(output["startdate"]) > int(output["enddate"]):

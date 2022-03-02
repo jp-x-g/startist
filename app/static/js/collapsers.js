@@ -1,4 +1,3 @@
-
 ////////////////////////////////////////////////////////////////////////////////
 // Here be Javascripts.
 // JPxG, February 2022
@@ -36,8 +35,8 @@ var i;
 
 for (i = 0; i < coll.length; i++) {
   coll[i].addEventListener("click", function() {
-  	this.innerHTML = this.innerHTML.replace("Show", "Extremely implausible string")
-  	this.innerHTML = this.innerHTML.replace("Hide", "Show")
-  	this.innerHTML = this.innerHTML.replace("Extremely implausible string", "Hide")
+    this.innerHTML = this.innerHTML.replace("Show", "Extremely implausible string")
+    this.innerHTML = this.innerHTML.replace("Hide", "Show")
+    this.innerHTML = this.innerHTML.replace("Extremely implausible string", "Hide")
   }); // End of listener
 } // End of collapsible-sections script.
