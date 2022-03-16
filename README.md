@@ -1,22 +1,35 @@
 Structure:
 ```
 ├── app
-│   ├── __init__.py
+├── __init__.py
+│   ├── logProfile.py
+│   ├── makeQueries.py
+│   ├── parseParams.py
+│   ├── renderPage.py
+│   ├── search.py
 │   ├── static
 │   │   ├── css
 │   │   │   ├── mw.ui.css
 │   │   │   └── startist.css
 │   │   ├── img
+│   │   │   ├── favicon.png
 │   │   │   └── startist-logo.png
 │   │   └── js
-│   │       └── index.js
+│   │       ├── collapsers.js
+│   │       ├── index.js
+│   │       ├── sorting.js
+│   │       └── tablesort.js
 │   ├── templates
-│   │   └── index.html
+│   │   ├── index.html
+│   │   └── results.html
 │   └── views.py
 ├── LICENSE
 ├── README.md
 ├── requirements.txt
 ├── run.py
+
+
+
 ```
 
 Basic invocation of the program:
