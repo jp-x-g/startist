@@ -1,7 +1,8 @@
 Structure:
 ```
+.
 ├── app
-├── __init__.py
+│   ├── __init__.py
 │   ├── logProfile.py
 │   ├── makeQueries.py
 │   ├── parseParams.py
@@ -23,12 +24,21 @@ Structure:
 │   │   ├── index.html
 │   │   └── results.html
 │   └── views.py
+├── app.py
+├── data
+│   └── log
+│       ├── master.log
+│       └── startist.log
 ├── LICENSE
 ├── README.md
-├── requirements.txt
-├── run.py
+└── requirements.txt
+```
 
 
+Installation looks like this:
+
+```
+git clone https://github.com/jp-x-g/startist
 
 ```
 
