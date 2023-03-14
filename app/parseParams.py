@@ -177,6 +177,7 @@ def valiDate(d):
 	if month < 1:
 		return "INVALID: Month lower than 1. Zerouary is a lie."
 	lengths = [420, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+	# Note that lengths[0] is 420: there is no month 0, so this will never be accessed.
 	if day > lengths[month]:
 		return "INVALID: Day higher than exists for that month. Try the knuckle-counting thing next time."
 	if day < 1:
@@ -268,12 +269,18 @@ def parse(params):
 	# daysOffset = 30 * 6
 
 	# Six hundred years.
-	 daysOffset = 365 * 600
-	offset = timedelta(
-		days=daysOffset
-	)
-	backthen = today - offset
-	backthenFormat = backthen.strftime("%Y%m%d") + "000000"
+	# daysOffset = 365 * 600
+	# offset = timedelta( days=daysOffset )
+	# backthen = today - offset
+	# backthenFormat = backthen.strftime("%Y%m%d") + "000000"
+
+	# This stuff above is not necessary, let's just use something canonical.
+
+	backthenFormat = "19700101000000"
+
+	if !(output["startdate"]):
+		output["startdate"] = backthenFormat
+		# If there's just no oldest date whatsoever.
 
 	if output["startdate"] == "":
 		output["startdate"] = backthenFormat
@@ -300,5 +307,5 @@ def parse(params):
 	return output
 	# This is being called from views.py.
 
-if __name__ == "__main__":
+if __name__ == "__main__":sssss
 	print(docstring)
