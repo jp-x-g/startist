@@ -209,6 +209,7 @@ def parse(params):
 	For example, selecting BOTN and BN will cause the "noticeboards" item to look like:
 	[[4, "Bots/Noticeboard", "BOTN"], [4, "Bureaucrats'_noticeboard", "BN"]]
 	"""
+	print("Parsing params.")
 
 	output = {}
 	output["username"] = params["username"]
@@ -277,8 +278,11 @@ def parse(params):
 	# This stuff above is not necessary, let's just use something canonical.
 
 	backthenFormat = "19700101000000"
+	backthen = datetime.strptime(backthenFormat[0:8], "%Y%m%d")
 
-	if !(output["startdate"]):
+	if output["startdate"]:
+		pass
+	else:
 		output["startdate"] = backthenFormat
 		# If there's just no oldest date whatsoever.
 
@@ -307,5 +311,5 @@ def parse(params):
 	return output
 	# This is being called from views.py.
 
-if __name__ == "__main__":sssss
+if __name__ == "__main__":
 	print(docstring)

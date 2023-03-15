@@ -51,7 +51,7 @@ def queryNamespace(ob, item, include=False):
 	apiUrl = "https://en.wikipedia.org/w/api.php"
 	# Open session.
 	ob["debug"] = "Opened session for API queries"
-
+	print("Beginning queries.")
 	while (continueQuerying == 1):
 		queryParams = {
 		"action": "query",
@@ -63,9 +63,14 @@ def queryNamespace(ob, item, include=False):
 		"uccontinue": continueTimestamp
 		}
 		# The next line is for debug only.
+		#print("Querying")
 		ob["debug"] = "Current query: " + str(queryParams)
-		response = sess.get(url=apiUrl, params=queryParams)
+		#print(f"Querying with {apiUrl}")
+		print(queryParams)
+		response = sess.get(url=apiUrl, params=queryParams, timeout=5)
+		#print("Querying")
 		r = response.json()
+		#print("Querying")
 		ob["totalQueries"] += 1
 		#ob["response"] = r
 		ob["debug"] = ob["debug"] + " . Query now received"
@@ -79,6 +84,7 @@ def queryNamespace(ob, item, include=False):
 			ob["debug"] = "Query response had no 'continue', processing last batch of results"
 		for result in r["query"]["usercontribs"]:
 			# 2022-02-13T01:46:08Z
+			# print("New result")
 			ob["totalResults"] += 1
 			ts = result["timestamp"].replace("-", "").replace(":", "").replace("T", "").replace("Z", "")
 			if int(ts) > int(oldest):

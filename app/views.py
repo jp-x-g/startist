@@ -14,6 +14,7 @@ from flask import request
 
 @app.route("/")
 def index():
+	print("Index")
 	return render_template("index.html")
 
 @app.route("/api")
@@ -22,20 +23,24 @@ def about():
 
 @app.route("/results")
 def showResults():
+	print("Parsing params")
 	parsedParams = parseParams.parse(request.args)
 	# Parse parameters using parseParams.py.
+	print("Making queries")
 	results = makeQueries.query(parsedParams)
 	# Use those parameters to make queries, using makeQueries.py.
 	
 	logProfile.log(results)
 	# Store some basic profiling information (number of queries, timestamp, etc)
 
+	print("Rendering page")
 	renderOutput = renderPage.render(results)
 	# Use the query output to render a page, using renderPage.py.
 	# If the params say "HTML", it'll render a Jinja template.
 	# Otherwise, it's just going to return whatever the user asked for.
 
 
+	print("Serving page")
 	if results[0]["format"] == "HTML":
 		return render_template("results.html", inp=renderOutput)
 	else:
